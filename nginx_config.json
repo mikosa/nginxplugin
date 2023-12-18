@@ -1,0 +1,14 @@
+http {
+    lua_package_path "/path/to/lua/plugins/?.lua;;"; # Path to your Lua plugins
+
+    server {
+        listen 80;
+
+        location / {
+            content_by_lua_block {
+                local scale_deployments = require "redis_hostname_sender"
+                scale_deployments.scale_all_deployments_in_namespace()
+            }
+        }
+    }
+}
